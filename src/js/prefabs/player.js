@@ -22,12 +22,17 @@ export default class Player extends Phaser.Sprite {
             y: 0
         };
 
-        this.bullets = this.game.add.group();
+        this.playerShootTime = 0;
+        this.playerShootInterval = 0.16;
+        
+		this.bullets = this.game.add.group();
         this.bullets.enableBody = true;
         this.bulletSpeed = -500;
 
         this.shotSound = this.game.add.sound('playerShot');
 
+        this.spacebar = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+				
         this.game.input.onDown.add(() => {
             if (this.alive) {
                 let {x,y} = this.game.input.activePointer.position;
@@ -91,6 +96,18 @@ export default class Player extends Phaser.Sprite {
             this.lastPos.x = x;
             this.lastPos.y = y;
         }
+		
+		this.playerShootTime += this.game.time.physicsElapsed;
+				
+		if(this.spacebar.isDown) { 
+	        if (this.playerShootTime > this.playerShootInterval) {
+	            this.playerShootTime = 0;
+	            if (this.alive) {
+	                this.shoot();
+	            }
+	        }
+		}		
+		
     }
 
     shoot() {

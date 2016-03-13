@@ -27,21 +27,11 @@ export default class Play extends Phaser.State {
             game: this.game,
             player: this.player
         });
-
-        this.game.input.onDown.add(() => {
-            this.game.time.slowMotion = 1;
-        });
-
-        this.game.input.onUp.add(() => {
-            this.game.time.slowMotion = 3;
-        });
-
+		
         this.enemyTime = 0;
         this.enemyInterval = 1.5;
         this.enemyShootTime = 0;
         this.enemyShootInterval = 1;
-        this.playerShootTime = 0;
-        this.playerShootInterval = 0.16;
 
         this.game.time.events.loop(Phaser.Timer.SECOND * 10, () => {
             if(this.enemyInterval > 0.2 ){
@@ -70,7 +60,6 @@ export default class Play extends Phaser.State {
 
         this.enemyTime += this.game.time.physicsElapsed;
         this.enemyShootTime += this.game.time.physicsElapsed;
-        this.playerShootTime += this.game.time.physicsElapsed;
 
         if (this.enemyTime > this.enemyInterval) {
             this.enemyTime = 0;
@@ -96,14 +85,7 @@ export default class Play extends Phaser.State {
                 this.game.world.bringToTop(this.overlay);
             }
         }
-
-        if (this.playerShootTime > this.playerShootInterval) {
-            this.playerShootTime = 0;
-            if (this.player.alive) {
-                this.player.shoot();
-            }
-        }
-
+		
         this.game.physics.arcade.overlap(this.player.bullets, this.enemies, this.hitEnemy, null, this);
 
         this.game.physics.arcade.overlap(this.player, this.enemies, this.crashEnemy, null, this);
