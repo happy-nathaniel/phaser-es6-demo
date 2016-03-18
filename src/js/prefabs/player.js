@@ -35,12 +35,13 @@ export default class Player extends Phaser.Sprite {
 				
         this.game.input.onDown.add(() => {
             if (this.alive) {
-                let {x,y} = this.game.input.activePointer.position;
+          
+		        let {x,y} = this.game.input.activePointer.position;
                 this.diff.x = x - this.position.x;
                 this.diff.y = y - this.position.y;
             }
         });
-
+       
         this.game.input.onUp.add(() => {
             if (this.alive) {
                 this.frame = 1;

@@ -20,7 +20,7 @@ export default class Enemy extends Phaser.Sprite {
         this.bullets.enableBody = true;
         this.bulletSpeed = bulletSpeed;
 
-        this.shotSound = this.game.add.sound('enemyShot');
+        this.shotSound = this.game.add.sound('enemy shot');
 
     }
 
